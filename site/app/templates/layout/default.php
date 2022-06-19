@@ -38,5 +38,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
 </head>
 <body>
+    <?= $this->element('topo') ?>
+    <main class="main">
+        <?= $this->Flash->render() ?>
+        <?= $this->fetch('content') ?>
+    </main>
 </body>
 </html>
