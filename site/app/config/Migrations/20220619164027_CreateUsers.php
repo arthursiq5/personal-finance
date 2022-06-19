@@ -15,6 +15,41 @@ class CreateUsers extends AbstractMigration
     public function change()
     {
         $table = $this->table('users');
+        $table->addColumn('nome', 'string', [
+            'default' => null,
+            'limit' => 100,
+            'null' => false,
+        ]);
+        $table->addColumn('email', 'string', [
+            'default' => null,
+            'limit' => 100,
+            'null' => false,
+        ]);
+        $table->addColumn('senha', 'string', [
+            'default' => null,
+            'limit' => 200,
+            'null' => false,
+        ]);
+        $table->addColumn('ativo', 'boolean', [
+            'default' => false,
+            'limit' => null,
+            'null' => false,
+        ]);
+        $table->addColumn('created', 'datetime', [
+            'default' => null,
+            'limit' => null,
+            'null' => false,
+        ]);
+        $table->addColumn('updated', 'datetime', [
+            'default' => null,
+            'limit' => null,
+            'null' => false,
+        ]);
         $table->create();
+    }
+
+    public function down()
+    {
+        $this->table('users')->drop()->save();
     }
 }

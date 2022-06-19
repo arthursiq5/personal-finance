@@ -37,27 +37,46 @@ return [
     'Datasources' => [
         'default' => [
             'host' => 'localhost',
-            /*
-             * CakePHP will use the default DB port based on the driver selected
-             * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
-             * the following line and set the port accordingly
-             */
-            //'port' => 'non_standard_port_number',
+            'className' => Connection::class,
+            'driver' => \Cake\Database\Driver\Mysql::class,
+            'persistent' => false,
+            'timezone' => 'UTC',
 
-            'username' => 'my_app',
-            'password' => 'secret',
-
-            'database' => 'my_app',
+            'username' => 'personal_finance',
+            'password' => '0af5a5588e610a6fa655c38645a57abe',
+            'database' => 'personal_finance_database',
             /*
-             * If not using the default 'public' schema with the PostgreSQL driver
-             * set it here.
+             * For MariaDB/MySQL the internal default changed from utf8 to utf8mb4, aka full utf-8 support, in CakePHP 3.6
              */
-            //'schema' => 'myapp',
+            //'encoding' => 'utf8mb4',
 
             /*
-             * You can use a DSN string to set the entire configuration
+             * If your MySQL server is configured with `skip-character-set-client-handshake`
+             * then you MUST use the `flags` config to set your charset encoding.
+             * For e.g. `'flags' => [\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4']`
              */
-            'url' => env('DATABASE_URL', null),
+            'flags' => [],
+            'cacheMetadata' => true,
+            'log' => false,
+
+            /*
+             * Set identifier quoting to true if you are using reserved words or
+             * special characters in your table or column names. Enabling this
+             * setting will result in queries built using the Query Builder having
+             * identifiers quoted when creating SQL. It should be noted that this
+             * decreases performance because each query needs to be traversed and
+             * manipulated before being executed.
+             */
+            'quoteIdentifiers' => false,
+
+            /*
+             * During development, if using MySQL < 5.6, uncommenting the
+             * following line could boost the speed at which schema metadata is
+             * fetched from the database. It can also be set directly with the
+             * mysql configuration directive 'innodb_stats_on_metadata = 0'
+             * which is the recommended value in production environments
+             */
+            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
         ],
 
         /*
