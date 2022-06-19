@@ -5,6 +5,10 @@
 /logs/*
 /tmp/*
 /vendor/*
+/site/app/config/app_local.php
+/site/app/config/.env
+/site/app/logs/*
+/site/app/tmp/*
 /site/app/vendor/*
 
 # OS generated files #
@@ -49,6 +53,7 @@ nbproject/*
 .sass-cache/
 # node
 /node_modules/*
+/site/app/node_modules/*
 # yarn
 yarn-debug.log
 yarn-error.log
