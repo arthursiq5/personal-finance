@@ -8,9 +8,11 @@ $(function() {
 
     function isValid($form) {
 
+        if (!isValidEmail($form.find('input#email'))) {
+            return false
+        }
 
-
-        if ($form.find('input#senha').val() == $form.find('input#senha-confirma').val()) {
+        if ($form.find('input#senha').val() != $form.find('input#senha-confirma').val()) {
             return false
         }
 
@@ -18,8 +20,11 @@ $(function() {
     }
 
     $('#cadastro form').on('submit', function(e) {
-        e.preventDefault()
         let $form = $(this)
-        if (isValid($form)) $form.submit()
+        console.log('teste');
+        if (!isValid($form)) {
+            e.preventDefault()
+            return;
+        }
     });
 })

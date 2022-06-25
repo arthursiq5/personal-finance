@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  */
 echo $this->Html->css(['form', 'login']);
+echo $this->element('noscript')
 ?>
 <div class="container-fluid">
     <?php echo $this->Flash->render(); ?>

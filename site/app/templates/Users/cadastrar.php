@@ -26,7 +26,7 @@ echo $this->element('noscript');
     <div class="row" id="cadastro">
         <?php if (!isset($salvou)) : ?>
         <div class="col-12">
-            <?php echo $this->Form->create($user, ['url' => '/cliente/cadastrar', 'class' => 'form']); ?>
+            <?php echo $this->Form->create($user, ['url' => '/users/cadastrar', 'class' => 'form']); ?>
 
             <h2>Dados de Cadastro</h2>
             <?php
