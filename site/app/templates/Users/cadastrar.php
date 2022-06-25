@@ -1,8 +1,9 @@
 <?php
 
- /**
+/**
   * @var \App\View\AppView $this
   */
+echo $this->Html->css(['form']);
 ?>
 <div class="container-fluid" id="cadastro">
     <h1>Cadastro</h1>

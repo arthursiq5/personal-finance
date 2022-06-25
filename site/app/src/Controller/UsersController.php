@@ -154,7 +154,7 @@ class UsersController extends AppController
         $this->User->fazerLogout();
     }
 
-    public function cadastro(): ?Response
+    public function cadastrar(): ?Response
     {
         $user = $this->Users->newEmptyEntity();
         $this->set(compact('user'));

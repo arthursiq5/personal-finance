@@ -16,11 +16,10 @@
     font-size: 1.25rem;
 }
 
-input[type=submit],
-a.botao {
+#login form input[type=submit],
+#login a.botao {
     padding: 0 25px;
     background-color: #009688;
-    border: 2px solid #000;
     color: #fff;
     height: 50px;
     display: inline-block;
@@ -32,12 +31,13 @@ a.botao {
     text-transform: uppercase;
     width: 100%;
     margin: 0;
-    border-color: #009688;
     text-align: center;
+    appearance: button;
+    -webkit-appearance: button;
 }
 
-input[type=submit]:hover,
-a.botao:hover {
+#login form input[type=submit]:hover,
+#login a.botao:hover {
     background-color: #4db6ac;
     border-color: #4db6ac;
 }

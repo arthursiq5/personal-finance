@@ -2,7 +2,7 @@
 /**
  * @var \App\View\AppView $this
  */
-echo $this->Html->css(['form', 'login'])
+echo $this->Html->css(['form', 'login']);
 ?>
 <div class="container-fluid">
     <?php echo $this->Flash->render(); ?>
@@ -31,7 +31,7 @@ echo $this->Html->css(['form', 'login'])
             <p>
                 Ao criar uma conta você poderá registrar suas finanças pessoais com facilidade
             </p>
-            <?php echo $this->Html->link('cadastrar-se', '/cadastro', ['class' => 'botao']); ?>
+            <?php echo $this->Html->link('cadastrar-se', '/cadastrar', ['class' => 'botao']); ?>
         </div>
     </div>
 </div>
