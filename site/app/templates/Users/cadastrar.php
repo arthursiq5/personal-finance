@@ -4,6 +4,8 @@
   * @var \App\View\AppView $this
   */
 echo $this->Html->css(['form']);
+echo $this->Html->script('cadastrar_usuario.js');
+echo $this->element('noscript');
 ?>
 <div class="container-fluid" id="cadastro">
     <h1>Cadastro</h1>
@@ -24,7 +26,7 @@ echo $this->Html->css(['form']);
     <div class="row" id="cadastro">
         <?php if (!isset($salvou)) : ?>
         <div class="col-12">
-            <?php echo $this->Form->create($user, ['url' => '/cliente/cadastro', 'class' => 'form']); ?>
+            <?php echo $this->Form->create($user, ['url' => '/cliente/cadastrar', 'class' => 'form']); ?>
 
             <h2>Dados de Cadastro</h2>
             <?php

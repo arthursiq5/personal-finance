@@ -45,11 +45,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <?= $this->fetch('content') ?>
     </main>
     <noscript>
-
-        <meta http-equiv="refresh" content="2;URL=<?= $this->Url->build('/') ?>">
-
-        Para utilizar este sistema é necessário habilitar o JavaScript.
-        Aqui estão as <a href="https://www.enable-javascript.com/pt/" target="_blank">instruções de como habilitar o JavaScript no seu navegador</a>.
+        <div class="container-fluid">
+            <p>
+                Para utilizar este sistema é necessário habilitar o JavaScript.
+                Aqui estão as <a href="https://www.enable-javascript.com/pt/" target="_blank">instruções de como habilitar o JavaScript no seu navegador</a>.
+            </p>
+        </div>
     </noscript>
 </body>
 </html>

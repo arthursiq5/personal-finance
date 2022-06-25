@@ -1,3 +1,8 @@
 .container-fluid {
     width: 90%;
 }
+
+body > noscript {
+    display: block;
+    margin-top: 1rem;
+}
