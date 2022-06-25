@@ -7,5 +7,6 @@
 if (!isset($params['escape']) || $params['escape'] !== false) {
     $message = h($message);
 }
+echo $this->Html->css('flash/error.css')
 ?>
-<div class="message error" onclick="this.classList.add('hidden');"><?= $message ?></div>
+<div class="message error alert alert-danger" onclick="this.classList.add('hidden');"><?= $message ?></div>
