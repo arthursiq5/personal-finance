@@ -4,7 +4,7 @@
  */
 ?>
 <li class="nav-item">
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="<?= $this->Url->build('/login') ?>">
     <?= $this->Html->image('ico/user_add.png', ['class' => 'img-fluid ico']) ?>
         Entrar
     </a>

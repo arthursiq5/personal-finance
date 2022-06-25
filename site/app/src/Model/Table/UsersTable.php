@@ -3,10 +3,15 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\User;
+use ArrayObject;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\EventInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Exception;
 
 /**
  * Users Model
@@ -27,8 +32,24 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class UsersTable extends Table
+class UsersTable extends AppTable
 {
+    public $validate = [
+        'nome' => ['rule' => '/.+/', 'message' => 'Preencha corretamente o campo nome!'],
+        'email' => [
+            'rule1' => [
+                'rule' => 'email',
+                'message' => 'Preencha corretamente o campo email!',
+                'required' => true,
+            ],
+            'rule2' => [
+                'rule' => 'isUnique',
+                'message' => 'Este email já existe',
+            ],
+        ],
+        'ativo' => ['numeric'],
+    ];
+
     /**
      * Initialize method
      *
@@ -43,7 +64,14 @@ class UsersTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+        $this->addBehavior('Timestamp', [
+            'events' => [
+                'Model.beforeSave' => [
+                    'created' => 'new',
+                    'updated' => 'always',
+                ],
+            ],
+        ]);
     }
 
     /**
@@ -90,5 +118,60 @@ class UsersTable extends Table
         $rules->add($rules->isUnique(['email']), ['errorField' => 'email']);
 
         return $rules;
+    }
+
+    public function getSenhaCriptografada($senha, $salt = null): string
+    {
+        return password_hash($senha, PASSWORD_DEFAULT);
+    }
+
+    public function senhasIguais(string $senhaInformada, string $senhaBancoDados): bool
+    {
+        return password_verify($senhaInformada, $senhaBancoDados);
+    }
+
+    public function getSenhaAleatoria($digitos = 5): string
+    {
+        $novaSenha = "";
+        for ($x = 0; $x < $digitos; $x++) {
+            $novaSenha .= rand(0, 9);
+        }
+
+        return $novaSenha;
+    }
+
+    public function trocarSenha($id, $novaSenha): void
+    {
+        $senha = $this->getSenhaCriptografada($novaSenha);
+        $entity = $this->newEmptyEntity();
+        $entity->id = $id;
+        $entity->senha = $senha;
+        if (!$this->save($entity)) {
+            throw new Exception('Não foi possível salvar a nova senha!');
+        }
+    }
+
+    public function getUsuarioValido($email, $senha): User
+    {
+        $usuario = $this->findByEmail($email)->first();
+        if (empty($usuario)) {
+            throw new Exception('Usuário não encontrado!');
+        }
+
+        if (!$this->senhasIguais($senha, $usuario->senha)) {
+            throw new Exception('Usuário ou senha inválidos!');
+        }
+
+        return $usuario;
+    }
+
+    public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    {
+        if (!$entity->isNew()) {
+            return true;
+        }
+
+        $entity->token = md5(time());
+        $entity->senha = $this->getSenhaCriptografada($entity->senha);
     }
 }

@@ -30,6 +30,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
 
     <?= $this->Html->css('bootstrap.min.css') ?>
+    <?= $this->Html->css('site') ?>
     <?= $this->Html->script('bootstrap.bundle.min.js') ?>
     <?= $this->Html->script('jquery.min.js') ?>
 

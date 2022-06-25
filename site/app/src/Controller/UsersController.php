@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Response;
+use Exception;
+
 /**
  * Users Controller
  *
@@ -100,5 +104,76 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * @return \Cake\Http\Response|null
+     */
+    public function login()
+    {
+        if ($this->User->isUsuarioLogado()) {
+            return $this->redirect($this->User->loginRedirect);
+        }
+
+        if (!empty($this->request->getData())) {
+            try {
+                $email = $this->request->getData()['email'];
+                $senha = $this->request->getData()['senha'];
+                $user = $this->Usuarios->getUsuarioValido($email, $senha);
+                $this->User->fazerLogin($user);
+            } catch (Exception $e) {
+                $this->Flash->error($e->getMessage());
+            }
+        }
+    }
+
+    public function autenticar()
+    {
+        if (!$this->getRequest()->is('post')) {
+            throw new BadRequestException('Deve ser uma requisição POST!');
+        }
+
+        if (!$this->getRequest()->is('json')) {
+            throw new BadRequestException('A rerquisição deve ser JSON!');
+        }
+
+        $email = $this->request->getData()['email'];
+        $senha = $this->request->getData()['senha'];
+
+        try {
+            $user = $this->Usuarios->getUsuarioValido($email, $senha);
+        } catch (Exception $e) {
+            throw new BadRequestException($e->getMessage());
+        }
+        $this->set('token', $user->token);
+        $this->viewBuilder()->setOption('serialize', ['token']);
+    }
+
+    public function logout()
+    {
+        $this->User->fazerLogout();
+    }
+
+    public function cadastro(): ?Response
+    {
+        $user = $this->Users->newEmptyEntity();
+        $this->set(compact('user'));
+
+        if (!empty($this->getRequest()->getData())) {
+            try {
+                $dados = $this->getRequest()->getData();
+
+                $id = $this->Users->cadastrar_loja_virtual($dados);
+
+                $this->set('salvou', 1);
+                $this->getRequest()->getSession()->write('cliente', ['id' => $id]);
+
+                return $this->redirect('/');
+            } catch (Exception $e) {
+                $this->Flash->error($e->getMessage());
+            }
+        }
+
+        return null;
     }
 }

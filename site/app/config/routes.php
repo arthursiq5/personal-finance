@@ -51,6 +51,8 @@ return static function (RouteBuilder $routes) {
          * to use (in this case, templates/Pages/home.php)...
          */
         $builder->connect('/', ['controller' => 'Site', 'action' => 'index']);
+        $builder->connect('/login', ['controller' => 'Users', 'action' => 'login']);
+        $builder->connect('/cadastrar', ['controller' => 'Users', 'action' => 'cadastrar']);
 
         /*
          * ...and connect the rest of 'Pages' controller's URLs.

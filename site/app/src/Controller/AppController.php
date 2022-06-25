@@ -30,7 +30,7 @@ class AppController extends Controller
 {
     /**
      * Initialization hook method.
-     *
+     * @property \App\Model\Table\UsersTable $Users
      * Use this method to add common initialization code like loading components.
      *
      * e.g. `$this->loadComponent('FormProtection');`
@@ -42,7 +42,9 @@ class AppController extends Controller
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
+        $this->loadComponent('User');
         $this->loadComponent('Flash');
+        $this->loadModel('Users');
 
         /*
          * Enable the following component for recommended CakePHP form protection settings.
