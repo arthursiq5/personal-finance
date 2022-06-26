@@ -14,12 +14,12 @@ echo $this->element('noscript')
         <div class="content col-12 col-sm-6">
             <h2>Já tenho cadastro!</h2>
             <?php
-                echo $this->Form->create(null, ['url' => '/cliente/login', 'class' => 'form']);
+                echo $this->Form->create(null, ['url' => '/login', 'class' => 'form']);
                 ?>
                 <div class="campos">
                     <?php
-                        echo $this->Form->control('Login.email', ['label' => false, 'placeholder' => 'E-mail','div' => ['class' => 'form-group'],'class' => 'form-control','data-cypress' => 'login-email']);
-                        echo $this->Form->control('Login.senha', ['label' => false, 'placeholder' => 'Senha', 'type' => 'password' ,'data-cypress' => 'login-senha' ,'div' => ['class' => 'form-group'],'class' => 'form-control']);
+                        echo $this->Form->control('email', ['label' => false, 'placeholder' => 'E-mail','div' => ['class' => 'form-group'],'class' => 'form-control','data-cypress' => 'login-email']);
+                        echo $this->Form->control('senha', ['label' => false, 'placeholder' => 'Senha', 'type' => 'password' ,'data-cypress' => 'login-senha' ,'div' => ['class' => 'form-group'],'class' => 'form-control']);
                     ?>
                 </div>
                 <?php

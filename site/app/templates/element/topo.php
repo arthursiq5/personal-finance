@@ -14,7 +14,7 @@ echo $this->Html->css('topo.css');
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-lg-auto mb-2 mb-lg-0">
-                <?= $this->element('topo_links/nao_logado') ?>
+                <?= $this->element('topo_links/area_login') ?>
             </ul>
         </div>
     </div>
