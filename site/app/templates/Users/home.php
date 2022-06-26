@@ -2,6 +2,19 @@
 /**
  * @var \App\View\AppView $this
  */
+echo $this->Html->css(['home', 'card']);
 ?>
-<h1>logado</h1>
-<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum optio accusamus eius commodi voluptate! Quod facere accusantium iusto beatae fugit voluptatibus. A voluptate ullam consequatur, minima laudantium nesciunt cumque reprehenderit.</p>
+<div id="home">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <a href="<?= $this->Url->build(['controller' => 'Wallets', 'action' => 'index']) ?>" class="card">
+                    <div class="card-body">
+                        <?= $this->Html->image('ico/wallet.png', ['class' => 'img-fluid ico']) ?>
+                        <h5>Carteiras</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

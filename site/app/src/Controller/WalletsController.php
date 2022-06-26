@@ -19,6 +19,9 @@ class WalletsController extends AppController
     public function index()
     {
         $this->paginate = [
+            'conditions' => [
+                'Wallets.user_id' => $this->getLoggedUser()->id,
+            ],
             'contain' => ['Users'],
         ];
         $wallets = $this->paginate($this->Wallets);
@@ -39,6 +42,11 @@ class WalletsController extends AppController
             'contain' => ['Users'],
         ]);
 
+        if ($wallet->user->id != $this->getLoggedUser()->id) {
+            $this->Flash->error('Essa carteira não foi encontrada');
+            $this->redirect(['action' => 'index']);
+        }
+
         $this->set(compact('wallet'));
     }
 
@@ -51,7 +59,11 @@ class WalletsController extends AppController
     {
         $wallet = $this->Wallets->newEmptyEntity();
         if ($this->request->is('post')) {
-            $wallet = $this->Wallets->patchEntity($wallet, $this->request->getData());
+
+            $data = $this->request->getData();
+            $data['user_id'] = $this->getLoggedUser()->id;
+
+            $wallet = $this->Wallets->patchEntity($wallet, $data);
             if ($this->Wallets->save($wallet)) {
                 $this->Flash->success(__('The wallet has been saved.'));
 

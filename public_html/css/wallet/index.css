@@ -1,0 +1,13 @@
+#carteira {
+    margin-top: 2rem;
+}
+
+#carteira .ordenar-por  span {
+    background-color: #efefef;
+    border: 1px solid #dddddd;
+}
+
+#carteira .ordenar-por  span a {
+    color: #121212;
+    text-decoration: none;
+}

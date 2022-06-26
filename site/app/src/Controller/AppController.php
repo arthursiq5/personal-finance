@@ -59,8 +59,18 @@ class AppController extends Controller
     public function beforeRender(EventInterface $event)
     {
         parent::beforeRender($event);
+        $this->set('loggedUser', $this->getLoggedUser());
+    }
+
+    /**
+     *
+     * @return User|null
+     */
+    protected function getLoggedUser()
+    {
         if ($this->Authentication->getResult()->isValid()) {
-            $this->set('loggedUser', $this->Authentication->getResult()->getData());
+            return $this->Authentication->getResult()->getData();
         }
+        return null;
     }
 }

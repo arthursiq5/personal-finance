@@ -1,0 +1,10 @@
+#btn-add{
+    position: fixed;
+    right: 2.5%;
+    bottom: 30%;
+    z-index: 999;
+}
+#btn-add span{
+    content: url(../img/ico/add.png);
+    height: 60px;
+}

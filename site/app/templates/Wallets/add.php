@@ -19,8 +19,6 @@
                 <legend><?= __('Add Wallet') ?></legend>
                 <?php
                     echo $this->Form->control('name');
-                    echo $this->Form->control('balance');
-                    echo $this->Form->control('user_id', ['options' => $users]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
