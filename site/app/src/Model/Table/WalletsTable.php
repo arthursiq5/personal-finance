@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\Wallet;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -86,5 +87,14 @@ class WalletsTable extends Table
         $rules->add($rules->existsIn('user_id', 'Users'), ['errorField' => 'user_id']);
 
         return $rules;
+    }
+
+    public function softDelete(Wallet $wallet): bool
+    {
+        $wallet->active = false;
+        if ($this->save($wallet)) {
+            return true;
+        }
+        return false;
     }
 }

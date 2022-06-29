@@ -4,25 +4,30 @@
  * @var \App\Model\Entity\Wallet $wallet
  * @var \Cake\Collection\CollectionInterface|string[] $users
  */
+echo $this->Html->css(['wallet/index', 'form']);
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('List Wallets'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
-    <div class="column-responsive column-80">
-        <div class="wallets form content">
-            <?= $this->Form->create($wallet) ?>
-            <fieldset>
-                <legend><?= __('Add Wallet') ?></legend>
-                <?php
-                    echo $this->Form->control('name');
-                ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
+<div id="carteira">
+    <div class="container-fluid">
+        <div class="row">
+            <aside class="column">
+                <div class="side-nav">
+                    <a class="side-nav-item voltar" href="<?= $this->Url->build(['controller' => 'Wallets', 'action' => 'index']) ?>">
+                        <?= $this->Html->image('ico/back.png', ['class' => 'img-fluid ico']) ?>
+                        Listar Carteiras
+                    </a>
+                </div>
+            </aside>
+            <div class="wallets form content">
+                <?= $this->Form->create($wallet) ?>
+                <fieldset>
+                    <legend>Adicionar Carteira</legend>
+                    <?php
+                        echo $this->Form->control('name', ['label' => false, 'placeholder' => 'Nome']);
+                    ?>
+                </fieldset>
+                <?= $this->Form->button(__('Submit')) ?>
+                <?= $this->Form->end() ?>
+            </div>
         </div>
     </div>
 </div>

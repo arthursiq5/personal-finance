@@ -82,14 +82,13 @@ class WalletsController extends AppController
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function hide($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
         $wallet = $this->Wallets->get($id);
-        if ($this->Wallets->delete($wallet)) {
-            $this->Flash->success(__('The wallet has been deleted.'));
+        if ($this->Wallets->softDelete($wallet)) {
+            $this->Flash->success('A carteira foi ocultada');
         } else {
-            $this->Flash->error(__('The wallet could not be deleted. Please, try again.'));
+            $this->Flash->error('Houve um erro ao ocultar sua carteira');
         }
 
         return $this->redirect(['action' => 'index']);

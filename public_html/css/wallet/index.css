@@ -2,12 +2,72 @@
     margin-top: 2rem;
 }
 
-#carteira .ordenar-por  span {
-    background-color: #efefef;
-    border: 1px solid #dddddd;
+.wallets.form form {
+    text-align: center;
 }
 
-#carteira .ordenar-por  span a {
+.wallets.form form input,
+.wallets.form form button {
+    min-width: 15rem;
+    width: 40%;
+}
+
+.voltar {
+    font-size: 1rem;
     color: #121212;
     text-decoration: none;
+}
+
+.voltar .ico {
+    height: 1.25rem;
+    margin-top: -5px;
+}
+
+#carteira .wallet-item[data-active=false] {
+    display: none;
+}
+
+#carteira.show-all .wallet-item[data-active=false] {
+    display: block;
+
+}
+#carteira.show-all .wallet-item[data-active=false] .card-body {
+    background-color: #ddd;
+}
+
+#carteira #show-hide {
+    color: #222;
+    text-decoration: none;
+}
+
+#carteira #show-hide span {
+    padding: .5rem;
+    border: 1px solid grey;
+    max-width: 10rem;
+    text-align: center;
+    border-radius: 25px;
+}
+
+#carteira #show-hide img {
+    width: 30px;
+}
+
+#carteira #show-hide .img-show {
+    display: block;
+    background-color: #a7ffeb;
+    border-color: #00e676;
+}
+
+#carteira #show-hide .img-hide {
+    display: none;
+}
+
+#carteira.show-all #show-hide .img-show {
+    display: none;
+}
+
+#carteira.show-all #show-hide .img-hide {
+    display: block;
+    background-color: #ff9e80;
+    border-color: #ff1744;
 }
