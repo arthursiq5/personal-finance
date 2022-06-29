@@ -6,6 +6,7 @@ namespace App\Test\TestCase\Model\Table;
 use App\Lib\HashGenerationService;
 use App\Model\Entity\Transaction;
 use App\Model\Table\TransactionsTable;
+use App\Model\Table\WalletsTable;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -19,6 +20,10 @@ class TransactionsTableTest extends TestCase
      * @var \App\Model\Table\TransactionsTable
      */
     protected $Transactions;
+    /**
+     * @var \App\Model\Table\WalletsTable
+     */
+    protected $Wallets;
 
     /**
      * Fixtures
@@ -40,6 +45,8 @@ class TransactionsTableTest extends TestCase
         parent::setUp();
         $config = $this->getTableLocator()->exists('Transactions') ? [] : ['className' => TransactionsTable::class];
         $this->Transactions = $this->getTableLocator()->get('Transactions', $config);
+        $config = $this->getTableLocator()->exists('Wallets') ? [] : ['className' => WalletsTable::class];
+        $this->Wallets = $this->getTableLocator()->get('Wallets', $config);
     }
 
     /**
@@ -60,7 +67,7 @@ class TransactionsTableTest extends TestCase
         $transaction = $this->Transactions->addTransaction(new Transaction([
             'description' => 'teste',
             'wallet_id' => 1,
-            'value' => 123.45,
+            'value' => 1.5,
         ]));
         $this->assertEquals(2, $transaction->id);
         $this->assertEquals('teste', $transaction->description);
@@ -69,5 +76,6 @@ class TransactionsTableTest extends TestCase
             128,
             strlen($transaction->hash)
         );
+        $this->assertEquals(3, $this->Wallets->get(1)->balance);
     }
 }

@@ -8,6 +8,7 @@ use App\Model\Entity\Transaction;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 use DateTime;
 
@@ -107,15 +108,22 @@ class TransactionsTable extends Table
 
     public function addTransaction(Transaction $transaction): Transaction
     {
-        $transaction->previous_hash = '';
         $previousTransaction = $this->find()->order(['id' => 'DESC'])->first();
-        if (!empty($previousTransaction)) {
-            $transaction->previous_hash = $previousTransaction->previous_hash;
-        }
+        $transaction->previous_hash = $previousTransaction->hash ?? '';
         $transaction->created = (new DateTime())->getTimestamp();
         $transaction->hash = (new HashGenerationService($transaction))->crypt();
 
-        return $this->saveOrFail($transaction);
+        $transaction = $this->saveOrFail($transaction);
+
+        $config = TableRegistry::getTableLocator()->exists('Wallets') ? [] : ['className' => WalletsTable::class];
+        $Wallets = TableRegistry::getTableLocator()->get('Wallets', $config);
+
+        $wallet = $Wallets->get($transaction->wallet_id);
+        $wallet->balance += $transaction->value;
+
+        $Wallets->save($wallet);
+
+        return $transaction;
     }
 }
 
