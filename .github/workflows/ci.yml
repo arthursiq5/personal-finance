@@ -34,6 +34,7 @@ jobs:
 
     - name: Composer install
       run: |
+        cd site/app
         if [[ ${{ matrix.php-version }} == '8.1' ]]; then
           composer update --ignore-platform-reqs
         else
@@ -43,6 +44,7 @@ jobs:
 
     - name: Run PHPUnit
       run: |
+        cd site/app
         cp config/app_local.example.php config/app_local.php
         vendor/bin/phpunit
       env:
@@ -63,10 +65,14 @@ jobs:
         coverage: none
 
     - name: Composer install
-      run: composer install
+      run: |
+        cd site/app
+        composer install
 
     - name: Run PHP CodeSniffer
-      run: composer cs-check
+      run: |
+        cd site/app
+        composer cs-check
 
   static-analysis:
     name: Static Analysis
@@ -83,7 +89,11 @@ jobs:
         coverage: none
 
     - name: Composer install
-      run: composer require --dev phpstan/phpstan:^1.0.0
+      run: |
+        cd site/app
+        composer require --dev phpstan/phpstan:^1.0.0
 
     - name: Run phpstan
-      run: vendor/bin/phpstan
+      run: |
+        cd site/app
+        vendor/bin/phpstan
