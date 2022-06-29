@@ -5,5 +5,8 @@ namespace App\Lib;
 
 interface HashableInterface
 {
+    /**
+     * @return string
+     */
     public function getData(): string;
 }

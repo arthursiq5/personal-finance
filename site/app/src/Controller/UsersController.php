@@ -13,6 +13,10 @@ use Exception;
  */
 class UsersController extends AppController
 {
+    /**
+     * @param \Cake\Event\EventInterface $event event
+     * @return void
+     */
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -41,6 +45,9 @@ class UsersController extends AppController
         }
     }
 
+    /**
+     * @return \Cake\Http\Response|null
+     */
     public function logout()
     {
         $result = $this->Authentication->getResult();
@@ -51,6 +58,9 @@ class UsersController extends AppController
         }
     }
 
+    /**
+     * @return \Cake\Http\Response|null
+     */
     public function cadastrar(): ?Response
     {
         $user = $this->Users->newEmptyEntity();
@@ -74,6 +84,9 @@ class UsersController extends AppController
         return null;
     }
 
+    /**
+     * @return void
+     */
     public function home()
     {
     }
