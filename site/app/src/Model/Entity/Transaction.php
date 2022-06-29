@@ -40,6 +40,9 @@ class Transaction extends Entity implements HashableInterface
         'wallet' => true,
     ];
 
+    /**
+     * @return string
+     */
     public function getData(): string
     {
         $data = [

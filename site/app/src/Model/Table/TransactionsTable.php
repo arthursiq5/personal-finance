@@ -103,6 +103,10 @@ class TransactionsTable extends Table
         return $rules;
     }
 
+    /**
+     * @param \App\Model\Entity\Transaction $transaction transação
+     * @return void
+     */
     private function updateWalletBalance(Transaction $transaction): void
     {
         $config = TableRegistry::getTableLocator()->exists('Wallets') ? [] : ['className' => WalletsTable::class];
@@ -114,6 +118,12 @@ class TransactionsTable extends Table
         $Wallets->save($wallet);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param \App\Model\Entity\Transaction $transaction transação
+     * @return \App\Model\Entity\Transaction
+     */
     public function addTransaction(Transaction $transaction): Transaction
     {
         $previousTransaction = $this->find()->order(['id' => 'DESC'])->first();
@@ -128,6 +138,10 @@ class TransactionsTable extends Table
         return $transaction;
     }
 
+    /**
+     * @param int $id id da transação
+     * @return \App\Model\Entity\Transaction
+     */
     public function revertTransaction(int $id): Transaction
     {
         $revertedTransaction = $this->get($id);

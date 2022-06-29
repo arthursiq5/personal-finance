@@ -87,6 +87,10 @@ class WalletsTable extends Table
         return $rules;
     }
 
+    /**
+     * @param \App\Model\Entity\Wallet $wallet carteira a deletar
+     * @return bool
+     */
     public function softDelete(Wallet $wallet): bool
     {
         $wallet->active = false;

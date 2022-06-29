@@ -32,6 +32,10 @@ class User extends Entity
         '*' => true,
     ];
 
+    /**
+     * @param string $password senha a ser salva
+     * @return string|null
+     */
     protected function _setSenha(string $password): ?string
     {
         if (strlen($password) > 0) {

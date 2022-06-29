@@ -68,6 +68,10 @@ class TransactionsController extends AppController
         return $this->redirect(['controller' => 'Wallets', 'action' => 'index']);
     }
 
+    /**
+     * @param int|null $id transaction id
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
+     */
     public function revertTransaction(?int $id = null)
     {
         if (!empty($id)) {
@@ -89,6 +93,10 @@ class TransactionsController extends AppController
         return $this->redirect(['controller' => 'Wallets', 'action' => 'index']);
     }
 
+    /**
+     * @param array $data dados da transação
+     * @return \App\Model\Entity\Transaction
+     */
     private function montaNovaTransacao(array $data): Transaction
     {
         $transaction = $this->Transactions->newEmptyEntity();

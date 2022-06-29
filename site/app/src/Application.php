@@ -113,6 +113,10 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         return $middlewareQueue;
     }
 
+    /**
+     * @param \Psr\Http\Message\ServerRequestInterface $request requisição
+     * @return \Authentication\AuthenticationServiceInterface
+     */
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
     {
         $authenticationService = new AuthenticationService([

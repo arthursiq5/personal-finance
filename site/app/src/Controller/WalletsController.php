@@ -52,8 +52,13 @@ class WalletsController extends AppController
         $config = $this->getTableLocator()->exists('Transactions') ? [] : ['className' => TransactionsTable::class];
         $Transactions = $this->getTableLocator()->get('Transactions', $config);
 
+        $transacoes = $Transactions->find()
+            ->where(['wallet_id' => $wallet->id])
+            ->order(['id' => 'DESC'])
+            ->all();
+
         $this->set(compact('wallet'));
-        $this->set('transactions', $Transactions->find()->where(['wallet_id' => $wallet->id])->order(['id' => 'DESC'])->all());
+        $this->set('transactions', $transacoes);
     }
 
     /**

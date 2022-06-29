@@ -3,11 +3,17 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Table;
 
 class AppTable extends Table
 {
-    public function save(\Cake\Datasource\EntityInterface $entity, $options = [])
+    /**
+     * @param \Cake\Datasource\EntityInterface $entity entidade
+     * @param array $options opções
+     * @return \Cake\Datasource\EntityInterface|void
+     */
+    public function save(EntityInterface $entity, $options = [])
     {
         if (!isset($options['atomic'])) {
             $options['atomic'] = false;
@@ -16,7 +22,12 @@ class AppTable extends Table
         return parent::save($entity, $options);
     }
 
-    public function saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = []): \Cake\Datasource\EntityInterface
+    /**
+     * @param \Cake\Datasource\EntityInterface $entity entidade
+     * @param array $options opções
+     * @return \Cake\Datasource\EntityInterface|void
+     */
+    public function saveOrFail(EntityInterface $entity, $options = []): EntityInterface
     {
         if (!isset($options['atomic'])) {
             $options['atomic'] = false;
