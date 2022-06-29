@@ -15,6 +15,7 @@
                     <th><?= $this->Paginator->sort('wallet_id') ?></th>
                     <th><?= $this->Paginator->sort('description') ?></th>
                     <th><?= $this->Paginator->sort('value') ?></th>
+                    <th><?= $this->Paginator->sort('hash') ?></th>
                     <th><?= $this->Paginator->sort('previous_hash') ?></th>
                     <th><?= $this->Paginator->sort('created') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
@@ -27,6 +28,7 @@
                     <td><?= $transaction->has('wallet') ? $this->Html->link($transaction->wallet->name, ['controller' => 'Wallets', 'action' => 'view', $transaction->wallet->id]) : '' ?></td>
                     <td><?= h($transaction->description) ?></td>
                     <td><?= $this->Number->format($transaction->value) ?></td>
+                    <td><?= h($transaction->hash) ?></td>
                     <td><?= h($transaction->previous_hash) ?></td>
                     <td><?= h($transaction->created) ?></td>
                     <td class="actions">

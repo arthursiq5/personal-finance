@@ -3,10 +3,13 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Lib\HashGenerationService;
+use App\Model\Entity\Transaction;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use DateTime;
 
 /**
  * Transactions Model
@@ -76,6 +79,11 @@ class TransactionsTable extends Table
             ->notEmptyString('value');
 
         $validator
+            ->scalar('hash')
+            ->maxLength('hash', 128)
+            ->notEmptyString('hash');
+
+        $validator
             ->scalar('previous_hash')
             ->maxLength('previous_hash', 128)
             ->notEmptyString('previous_hash');
@@ -96,4 +104,18 @@ class TransactionsTable extends Table
 
         return $rules;
     }
+
+    public function addTransaction(Transaction $transaction): Transaction
+    {
+        $transaction->previous_hash = '';
+        $previousTransaction = $this->find()->order(['id' => 'DESC'])->first();
+        if (!empty($previousTransaction)) {
+            $transaction->previous_hash = $previousTransaction->previous_hash;
+        }
+        $transaction->created = (new DateTime())->getTimestamp();
+        $transaction->hash = (new HashGenerationService($transaction))->crypt();
+
+        return $this->saveOrFail($transaction);
+    }
 }
+

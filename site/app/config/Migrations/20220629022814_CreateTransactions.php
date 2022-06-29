@@ -29,6 +29,10 @@ class CreateTransactions extends AbstractMigration
             'precision' => 8,
             'scale' => 2,
         ]);
+        $table->addColumn('hash', 'string', [
+            'default' => '',
+            'limit' => 128
+        ]);
         $table->addColumn('previous_hash', 'string', [
             'default' => '',
             'limit' => 128

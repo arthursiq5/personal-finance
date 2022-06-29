@@ -27,6 +27,10 @@
                     <td><?= h($transaction->description) ?></td>
                 </tr>
                 <tr>
+                    <th><?= __('Hash') ?></th>
+                    <td><?= h($transaction->hash) ?></td>
+                </tr>
+                <tr>
                     <th><?= __('Previous Hash') ?></th>
                     <td><?= h($transaction->previous_hash) ?></td>
                 </tr>

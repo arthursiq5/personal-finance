@@ -26,6 +26,7 @@
                     echo $this->Form->control('wallet_id', ['options' => $wallets]);
                     echo $this->Form->control('description');
                     echo $this->Form->control('value');
+                    echo $this->Form->control('hash');
                     echo $this->Form->control('previous_hash');
                 ?>
             </fieldset>

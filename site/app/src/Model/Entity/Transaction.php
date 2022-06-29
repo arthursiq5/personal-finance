@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use App\Lib\HashableInterface;
 use Cake\ORM\Entity;
 
 /**
@@ -12,12 +13,13 @@ use Cake\ORM\Entity;
  * @property int $wallet_id
  * @property string|null $description
  * @property string $value
+ * @property string $hash
  * @property string $previous_hash
  * @property \Cake\I18n\FrozenTime $created
  *
  * @property \App\Model\Entity\Wallet $wallet
  */
-class Transaction extends Entity
+class Transaction extends Entity implements HashableInterface
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -32,8 +34,22 @@ class Transaction extends Entity
         'wallet_id' => true,
         'description' => true,
         'value' => true,
+        'hash' => true,
         'previous_hash' => true,
         'created' => true,
         'wallet' => true,
     ];
+
+    public function getData(): string
+    {
+        $data = [
+            'wallet_id' => $this->wallet_id,
+            'description' => $this->description,
+            'value' => $this->value,
+            'previous_hash' => $this->previous_hash ?? '',
+            'created' => $this->created,
+        ];
+
+        return json_encode($data);
+    }
 }

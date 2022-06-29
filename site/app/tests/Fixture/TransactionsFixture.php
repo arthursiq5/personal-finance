@@ -23,8 +23,10 @@ class TransactionsFixture extends TestFixture
                 'wallet_id' => 1,
                 'description' => 'Lorem ipsum dolor sit amet',
                 'value' => 1.5,
-                'previous_hash' => 'Lorem ipsum dolor sit amet',
-                'created' => 1656472373,
+                'hash' => 'Lorem ipsum dolor sit amet',
+                'hash' => 'a2297e409d13db8ace7177bc9c07eb17be614b40d510d0b7b250c6967a96cc02bbed081241714146ceeb705d75701f6569e83c9932996b58502b57abf25ccc16',
+                'previous_hash' => '',
+                'created' => 1656473725,
             ],
         ];
         parent::init();
