@@ -25,18 +25,18 @@ use Cake\Event\EventInterface;
  * Add your application-wide methods in the class below, your controllers
  * will inherit them.
  *
- * @property Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * @property \App\Controller\Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @link https://book.cakephp.org/4/en/controllers.html#the-app-controller
  */
 class AppController extends Controller
 {
     /**
      * Initialization hook method.
+     *
      * @property \App\Model\Table\UsersTable $Users
      * Use this method to add common initialization code like loading components.
      *
      * e.g. `$this->loadComponent('FormProtection');`
-     *
      * @return void
      */
     public function initialize(): void
@@ -63,14 +63,14 @@ class AppController extends Controller
     }
 
     /**
-     *
-     * @return User|null
+     * @return \App\Controller\User|null
      */
     protected function getLoggedUser()
     {
         if ($this->Authentication->getResult()->isValid()) {
             return $this->Authentication->getResult()->getData();
         }
+
         return null;
     }
 }

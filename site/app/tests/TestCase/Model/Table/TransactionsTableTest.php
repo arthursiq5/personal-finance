@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Lib\HashGenerationService;
 use App\Model\Entity\Transaction;
 use App\Model\Table\TransactionsTable;
 use App\Model\Table\WalletsTable;
@@ -61,7 +60,7 @@ class TransactionsTableTest extends TestCase
         parent::tearDown();
     }
 
-    public function testAddTransaction():void
+    public function testAddTransaction(): void
     {
         $previousTransaction = $this->Transactions->get(1);
         $transaction = $this->Transactions->addTransaction(new Transaction([
@@ -79,7 +78,7 @@ class TransactionsTableTest extends TestCase
         $this->assertEquals(3, $this->Wallets->get(1)->balance);
     }
 
-    public function testRevertTransaction():void
+    public function testRevertTransaction(): void
     {
         $previousTransaction = $this->Transactions->get(1);
         $transaction = $this->Transactions->revertTransaction(1);

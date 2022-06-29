@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Component;
 
-use App\Model\Table\UsersTable;
 use Cake\Controller\Component;
-use Cake\Controller\ComponentRegistry;
 use Cake\ORM\TableRegistry;
 use Exception;
 
@@ -58,7 +56,7 @@ class UserComponent extends Component
         [$tipo, $valor] = explode(' ', $auth[0]);
         if (strtolower($tipo) == 'basic') {
             [$login, $senha] = explode(':', base64_decode($valor));
-            /** @var UsersTable $usuarios */
+            /** @var \App\Model\Table\UsersTable $usuarios */
             $usuarios = TableRegistry::getTableLocator()->get('Users');
             try {
                 $usuario = $usuarios->getUsuarioValido($login, $senha);

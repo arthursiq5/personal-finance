@@ -5,7 +5,6 @@ namespace App\Model\Table;
 
 use App\Lib\HashGenerationService;
 use App\Model\Entity\Transaction;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -16,7 +15,6 @@ use DateTime;
  * Transactions Model
  *
  * @property \App\Model\Table\WalletsTable&\Cake\ORM\Association\BelongsTo $Wallets
- *
  * @method \App\Model\Entity\Transaction newEmptyEntity()
  * @method \App\Model\Entity\Transaction newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Transaction[] newEntities(array $data, array $options = [])
@@ -30,7 +28,6 @@ use DateTime;
  * @method \App\Model\Entity\Transaction[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method \App\Model\Entity\Transaction[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\Transaction[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class TransactionsTable extends Table
@@ -137,11 +134,10 @@ class TransactionsTable extends Table
 
         $transaction = new Transaction([
             'wallet_id' => $revertedTransaction->wallet_id,
-            'description' => '[REVERT TRANSACTION] '. $revertedTransaction->id,
+            'description' => '[REVERT TRANSACTION] ' . $revertedTransaction->id,
             'value' => $revertedTransaction->value * -1,
         ]);
 
         return $this->addTransaction($transaction);
     }
 }
-

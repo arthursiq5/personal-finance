@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\Wallet;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -13,7 +12,6 @@ use Cake\Validation\Validator;
  * Wallets Model
  *
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- *
  * @method \App\Model\Entity\Wallet newEmptyEntity()
  * @method \App\Model\Entity\Wallet newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Wallet[] newEntities(array $data, array $options = [])
@@ -95,6 +93,7 @@ class WalletsTable extends Table
         if ($this->save($wallet)) {
             return true;
         }
+
         return false;
     }
 }

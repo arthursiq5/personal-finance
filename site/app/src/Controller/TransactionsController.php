@@ -61,8 +61,31 @@ class TransactionsController extends AppController
             } catch (Exception $e) {
                 $this->Flash->error('Não foi possível adicionar uma nova transação');
             }
+
             return $this->redirect(['controller' => 'Wallets', 'action' => 'view', $data['wallet_id']]);
         }
+
+        return $this->redirect(['controller' => 'Wallets', 'action' => 'index']);
+    }
+
+    public function revertTransaction(?int $id = null)
+    {
+        if (!empty($id)) {
+            $wallet = $this->Transactions->get($id, ['contain' => ['Wallets']])->wallet;
+            if ($this->getLoggedUser()->id == $wallet->user_id) {
+                try {
+                    $transaction = $this->Transactions->revertTransaction($id);
+
+                    return $this->redirect(['controller' => 'Wallets', 'action' => 'view', $transaction->wallet_id]);
+                } catch (Exception $e) {
+                    $this->Flash->error('Houve um erro ao reverter sua transação, tente novamente mais tarde');
+
+                    return $this->redirect(['controller' => 'Wallets', 'action' => 'index']);
+                }
+            }
+        }
+        $this->Flash->error('Transação inválida, tente novamente');
+
         return $this->redirect(['controller' => 'Wallets', 'action' => 'index']);
     }
 
@@ -72,6 +95,7 @@ class TransactionsController extends AppController
         $transaction->description = $data['description'];
         $transaction->value = floatval(str_replace(' ', '', $data['value']));
         $transaction->wallet_id = $data['wallet_id'];
+
         return $transaction;
     }
 

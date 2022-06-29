@@ -46,6 +46,7 @@ echo $this->Html->css(['wallet/index', 'wallet/view', 'form']);
                             <th scope="col">Descrição</th>
                             <th scope="col">Valor</th>
                             <th scope="col">Data</th>
+                            <th scope="col">Opções</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,6 +56,9 @@ echo $this->Html->css(['wallet/index', 'wallet/view', 'form']);
                             <td><?= h($transaction->description) ?></td>
                             <td><?= $this->Number->format($transaction->value) ?></td>
                             <td><?= $transaction->created->i18nFormat('dd/MM/yyyy') ?></td>
+                            <td><a class="btn btn-primary" href="<?= $this->url->build(['controller' => 'Transactions', 'action' => 'revert_transaction', $transaction->id]) ?>">
+                                Reverter transação
+                            </a></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>

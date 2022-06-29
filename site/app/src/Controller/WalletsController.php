@@ -65,7 +65,6 @@ class WalletsController extends AppController
     {
         $wallet = $this->Wallets->newEmptyEntity();
         if ($this->request->is('post')) {
-
             $data = $this->request->getData();
             $data['user_id'] = $this->getLoggedUser()->id;
 

@@ -16,6 +16,10 @@ declare(strict_types=1);
  */
 namespace App;
 
+use Authentication\AuthenticationService;
+use Authentication\AuthenticationServiceInterface;
+use Authentication\AuthenticationServiceProviderInterface;
+use Authentication\Middleware\AuthenticationMiddleware;
 use Cake\Core\Configure;
 use Cake\Core\ContainerInterface;
 use Cake\Datasource\FactoryLocator;
@@ -27,10 +31,6 @@ use Cake\Http\MiddlewareQueue;
 use Cake\ORM\Locator\TableLocator;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
-use Authentication\AuthenticationService;
-use Authentication\AuthenticationServiceInterface;
-use Authentication\AuthenticationServiceProviderInterface;
-use Authentication\Middleware\AuthenticationMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -113,43 +113,43 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     }
 
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
-	{
-		$authenticationService = new AuthenticationService([
-			'unauthenticatedRedirect' => \Cake\Routing\Router::url([
-			'controller' => 'Users',
-			'action' => 'login',
-			'plugin' => null,
-			'prefix' => null
-			]),
-			'queryParam' => 'redirect',
-		]);
+    {
+        $authenticationService = new AuthenticationService([
+            'unauthenticatedRedirect' => \Cake\Routing\Router::url([
+            'controller' => 'Users',
+            'action' => 'login',
+            'plugin' => null,
+            'prefix' => null,
+            ]),
+            'queryParam' => 'redirect',
+        ]);
 
-		// Load identifiers, ensure we check email and password fields
-		$authenticationService->loadIdentifier('Authentication.Password', [
-			'fields' => [
-				'username' => 'email',
-				'password' => 'senha',
-			]
-		]);
+        // Load identifiers, ensure we check email and password fields
+        $authenticationService->loadIdentifier('Authentication.Password', [
+            'fields' => [
+                'username' => 'email',
+                'password' => 'senha',
+            ],
+        ]);
 
-		// Load the authenticators, you want session first
-		$authenticationService->loadAuthenticator('Authentication.Session');
-		// Configure form data check to pick email and password
-		$authenticationService->loadAuthenticator('Authentication.Form', [
-			'fields' => [
-				'username' => 'email',
-				'password' => 'senha',
-			],
-			'loginUrl' => \Cake\Routing\Router::url([
-			'controller' => 'Users',
-			'action' => 'login',
-			'plugin' => null,
-			'prefix' => null
-			]),
-		]);
+        // Load the authenticators, you want session first
+        $authenticationService->loadAuthenticator('Authentication.Session');
+        // Configure form data check to pick email and password
+        $authenticationService->loadAuthenticator('Authentication.Form', [
+            'fields' => [
+                'username' => 'email',
+                'password' => 'senha',
+            ],
+            'loginUrl' => \Cake\Routing\Router::url([
+            'controller' => 'Users',
+            'action' => 'login',
+            'plugin' => null,
+            'prefix' => null,
+            ]),
+        ]);
 
-		return $authenticationService;
-	}
+        return $authenticationService;
+    }
 
     /**
      * Register application container services.

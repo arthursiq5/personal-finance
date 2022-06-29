@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Response;
 use Exception;
 
@@ -47,6 +46,7 @@ class UsersController extends AppController
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
             $this->Authentication->logout();
+
             return $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
     }
@@ -74,6 +74,7 @@ class UsersController extends AppController
         return null;
     }
 
-    public function home() {
+    public function home()
+    {
     }
 }
