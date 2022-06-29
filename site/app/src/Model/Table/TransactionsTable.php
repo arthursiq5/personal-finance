@@ -106,6 +106,17 @@ class TransactionsTable extends Table
         return $rules;
     }
 
+    private function updateWalletBalance(Transaction $transaction): void
+    {
+        $config = TableRegistry::getTableLocator()->exists('Wallets') ? [] : ['className' => WalletsTable::class];
+        $Wallets = TableRegistry::getTableLocator()->get('Wallets', $config);
+
+        $wallet = $Wallets->get($transaction->wallet_id);
+        $wallet->balance += $transaction->value;
+
+        $Wallets->save($wallet);
+    }
+
     public function addTransaction(Transaction $transaction): Transaction
     {
         $previousTransaction = $this->find()->order(['id' => 'DESC'])->first();
@@ -115,15 +126,22 @@ class TransactionsTable extends Table
 
         $transaction = $this->saveOrFail($transaction);
 
-        $config = TableRegistry::getTableLocator()->exists('Wallets') ? [] : ['className' => WalletsTable::class];
-        $Wallets = TableRegistry::getTableLocator()->get('Wallets', $config);
-
-        $wallet = $Wallets->get($transaction->wallet_id);
-        $wallet->balance += $transaction->value;
-
-        $Wallets->save($wallet);
+        $this->updateWalletBalance($transaction);
 
         return $transaction;
+    }
+
+    public function revertTransaction(int $id): Transaction
+    {
+        $revertedTransaction = $this->get($id);
+
+        $transaction = new Transaction([
+            'wallet_id' => $revertedTransaction->wallet_id,
+            'description' => '[REVERT TRANSACTION] '. $revertedTransaction->id,
+            'value' => $revertedTransaction->value * -1,
+        ]);
+
+        return $this->addTransaction($transaction);
     }
 }
 

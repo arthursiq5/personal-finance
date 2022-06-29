@@ -78,4 +78,18 @@ class TransactionsTableTest extends TestCase
         );
         $this->assertEquals(3, $this->Wallets->get(1)->balance);
     }
+
+    public function testRevertTransaction():void
+    {
+        $previousTransaction = $this->Transactions->get(1);
+        $transaction = $this->Transactions->revertTransaction(1);
+        $this->assertEquals(2, $transaction->id);
+        $this->assertEquals('[REVERT TRANSACTION] 1', $transaction->description);
+        $this->assertEquals($previousTransaction->hash, $transaction->previous_hash);
+        $this->assertEquals(
+            128,
+            strlen($transaction->hash)
+        );
+        $this->assertEquals(0, $this->Wallets->get(1)->balance);
+    }
 }
