@@ -3,12 +3,11 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Wallet $wallet
  */
-echo $this->Html->css(['wallet/index', 'wallet/view']);
+echo $this->Html->css(['wallet/index', 'wallet/view', 'form']);
 ?>
 <div id="carteira">
-    <div class="row">
-        <div class="container-fluid">
-            <div class="row">
+    <div class="container-fluid">
+        <div class="row">
                 <aside class="column">
                     <div class="side-nav">
                         <a class="side-nav-item voltar" href="<?= $this->Url->build(['controller' => 'Wallets', 'action' => 'index']) ?>">
@@ -44,7 +43,32 @@ echo $this->Html->css(['wallet/index', 'wallet/view']);
                         </table>
                     </div>
                 </div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTransaction">
+                    Adicionar nova transação
+                </button>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($transactions as $transaction): ?>
+                        <tr>
+                            <td><?= $transaction->id ?></td>
+                            <td><?= h($transaction->description) ?></td>
+                            <td><?= $this->Number->format($transaction->value) ?></td>
+                            <td><?= $transaction->created->i18nFormat('dd/MM/yyyy') ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
+
+<?= $this->element('add_transaction', ['id' => 'addTransaction', 'walletId' => $wallet->id]) ?>

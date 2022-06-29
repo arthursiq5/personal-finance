@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Table\TransactionsTable;
+
 /**
  * Wallets Controller
  *
@@ -47,7 +49,11 @@ class WalletsController extends AppController
             $this->redirect(['action' => 'index']);
         }
 
+        $config = $this->getTableLocator()->exists('Transactions') ? [] : ['className' => TransactionsTable::class];
+        $Transactions = $this->getTableLocator()->get('Transactions', $config);
+
         $this->set(compact('wallet'));
+        $this->set('transactions', $Transactions->find()->where(['wallet_id' => $wallet->id])->order(['id' => 'DESC'])->all());
     }
 
     /**

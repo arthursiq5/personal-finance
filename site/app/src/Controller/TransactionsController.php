@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\Transaction;
+use Exception;
+
 /**
  * Transactions Controller
  *
@@ -40,6 +43,36 @@ class TransactionsController extends AppController
         ]);
 
         $this->set(compact('transaction'));
+    }
+
+    /**
+     * Add method
+     *
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
+     */
+    public function addTransaction()
+    {
+        if (!empty($this->request->getData())) {
+            try {
+                $data = $this->request->getData();
+                $transaction = $this->montaNovaTransacao($data);
+                $transaction = $this->Transactions->addTransaction($transaction);
+                $this->Flash->success('A transação foi criada com sucesso');
+            } catch (Exception $e) {
+                $this->Flash->error('Não foi possível adicionar uma nova transação');
+            }
+            return $this->redirect(['controller' => 'Wallets', 'action' => 'view', $data['wallet_id']]);
+        }
+        return $this->redirect(['controller' => 'Wallets', 'action' => 'index']);
+    }
+
+    private function montaNovaTransacao(array $data): Transaction
+    {
+        $transaction = $this->Transactions->newEmptyEntity();
+        $transaction->description = $data['description'];
+        $transaction->value = floatval(str_replace(' ', '', $data['value']));
+        $transaction->wallet_id = $data['wallet_id'];
+        return $transaction;
     }
 
     /**
