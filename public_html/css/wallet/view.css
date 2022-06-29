@@ -1,3 +1,20 @@
 .side-nav {
     margin-bottom: 2rem;
 }
+
+#newTransaction {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    background-color: #607d8b;
+    border-color: #555;
+    font-weight: bold;
+}
+
+#newTransaction:hover {
+    background-color: #78909c;
+    box-shadow: 0 0 10px #777;
+}
+
+#newTransaction img.ico {
+    width: 35px;
+}

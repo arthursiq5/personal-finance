@@ -25,27 +25,20 @@ echo $this->Html->css(['wallet/index', 'wallet/view', 'form']);
                         <h3><?= h($wallet->name) ?></h3>
                         <table>
                             <tr>
-                                <th><?= __('Name') ?></th>
+                                <th>Nome</th>
                                 <td><?= h($wallet->name) ?></td>
                             </tr>
                             <tr>
-                                <th><?= __('User') ?></th>
-                                <td><?= $wallet->has('user') ? $this->Html->link($wallet->user->id, ['controller' => 'Users', 'action' => 'view', $wallet->user->id]) : '' ?></td>
-                            </tr>
-                            <tr>
-                                <th><?= __('Id') ?></th>
-                                <td><?= $this->Number->format($wallet->id) ?></td>
-                            </tr>
-                            <tr>
-                                <th><?= __('Balance') ?></th>
-                                <td><?= $this->Number->format($wallet->balance) ?></td>
+                                <th>Saldo</th>
+                                <td><?= $this->Number->currency($wallet->balance, 'BRL') ?></td>
                             </tr>
                         </table>
+                        <button id="newTransaction" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTransaction">
+                            <?= $this->Html->image('ico/transaction.png', ['class' => 'img-fluid ico']) ?>
+                            Adicionar nova transação
+                        </button>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTransaction">
-                    Adicionar nova transação
-                </button>
                 <table class="table table-striped">
                     <thead>
                         <tr>
